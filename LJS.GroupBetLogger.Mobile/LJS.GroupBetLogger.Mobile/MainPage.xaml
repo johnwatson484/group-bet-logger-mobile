@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:LJS.GroupBetLogger.Mobile"
+             xmlns:Validators="clr-namespace:LJS.GroupBetLogger.Mobile.Validators.Implementations"
+             xmlns:Behaviors="clr-namespace:LJS.GroupBetLogger.Mobile.Behaviors"
+             x:Class="LJS.GroupBetLogger.Mobile.MainPage">
+
+    <StackLayout Padding="15">
+        <StackLayout.Behaviors>
+            <Behaviors:ValidationGroupBehavior x:Name="form"/>
+        </StackLayout.Behaviors>
+        
+        <Label Text="Register"
+               HorizontalOptions="Center"
+               FontAttributes="Bold"
+               FontSize="Large"/>
+        <Entry x:Name="UserName" Placeholder="User Name">
+            <Entry.Behaviors>
+                <Behaviors:ValidationBehavior Group="{x:Reference form}"
+                                              PropertyName="Text">
+                    <Behaviors:ValidationBehavior.Validators>
+                        <Validators:RequiredValidator />
+                    </Behaviors:ValidationBehavior.Validators>
+                </Behaviors:ValidationBehavior>
+            </Entry.Behaviors>
+        </Entry>
+        <Entry x:Name="Email" Placeholder="Email">
+            <Entry.Behaviors>
+                <Behaviors:ValidationBehavior Group="{x:Reference form}" 
+                                              PropertyName="Text">
+                    <Behaviors:ValidationBehavior.Validators>
+                        <Validators:RequiredValidator />
+                        <Validators:FormatValidator
+                            Message="Enter a Valid Email Address" 
+                            Format="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" />
+                    </Behaviors:ValidationBehavior.Validators>
+                </Behaviors:ValidationBehavior>
+            </Entry.Behaviors>
+        </Entry>
+        <Entry x:Name="Password" Placeholder="Password" IsPassword="True">
+            <Entry.Behaviors>
+                <Behaviors:ValidationBehavior Group="{x:Reference form}" 
+                                              PropertyName="Text">
+                    <Behaviors:ValidationBehavior.Validators>
+                        <Validators:RequiredValidator />
+                        <Validators:FormatValidator
+                            Message="Password must be at least 8 characters, contain 1 letter, and 1 number" 
+                            Format="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"/>
+                    </Behaviors:ValidationBehavior.Validators>
+                </Behaviors:ValidationBehavior>
+            </Entry.Behaviors>
+        </Entry>
+
+
+        <Entry x:Name="ConfirmPassword" Placeholder="Confirm Password" IsPassword="True">
+                      <Entry.Behaviors>
+                <Behaviors:ValidationBehavior Group="{x:Reference form}" 
+                                              PropertyName="Text">
+                    <Behaviors:ValidationBehavior.Validators>
+                        <Validators:RequiredValidator />
+                       
+                    </Behaviors:ValidationBehavior.Validators>
+                </Behaviors:ValidationBehavior>
+                <Behaviors:ComparisonBehavior x:Name="comparisonBehavior" CompareToEntry="{Binding Source={x:Reference Password}}"/>
+            </Entry.Behaviors> 
+        </Entry>
+
+        <Label x:Name="errorMessage" TextColor="Red"/>
+
+        <Button x:Name="BtnRegister" Clicked="BtnRegister_Clicked" Text="Register" IsEnabled="{Binding Source={x:Reference form}, Path=IsValid}"></Button>
+
+
+        <Label Text ="Already have account? Sign In"   TextColor="Blue">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="SignIn_Clicked"/>
+            </Label.GestureRecognizers>
+        </Label>
+    </StackLayout>
+    
+
+</ContentPage>

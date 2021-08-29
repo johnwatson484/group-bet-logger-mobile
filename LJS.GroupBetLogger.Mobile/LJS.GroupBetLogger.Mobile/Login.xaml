@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:LJS.GroupBetLogger.Mobile"
+             xmlns:Validators="clr-namespace:LJS.GroupBetLogger.Mobile.Validators.Implementations"
+             xmlns:Behaviors="clr-namespace:LJS.GroupBetLogger.Mobile.Behaviors"
+             x:Class="LJS.GroupBetLogger.Mobile.Login">
+
+    <StackLayout Padding="15">
+        <StackLayout.Behaviors>
+            <Behaviors:ValidationGroupBehavior x:Name="loginForm"/>
+        </StackLayout.Behaviors>
+
+        <Label Text="Login"
+               HorizontalOptions="Center"
+               FontAttributes="Bold"
+               FontSize="Large"/>
+        <Entry x:Name="UserName" Placeholder="User Name">
+            <Entry.Behaviors>
+                <Behaviors:ValidationBehavior Group="{x:Reference loginForm}"
+                                              PropertyName="Text">
+                    <Behaviors:ValidationBehavior.Validators>
+                        <Validators:RequiredValidator />
+                    </Behaviors:ValidationBehavior.Validators>
+                </Behaviors:ValidationBehavior>
+            </Entry.Behaviors>
+        </Entry>
+       
+        <Entry x:Name="Password" Placeholder="Password" IsPassword="True">
+            <Entry.Behaviors>
+                <Behaviors:ValidationBehavior Group="{x:Reference loginForm}" 
+                                              PropertyName="Text">
+                    <Behaviors:ValidationBehavior.Validators>
+                        <Validators:RequiredValidator />
+                    </Behaviors:ValidationBehavior.Validators>
+                </Behaviors:ValidationBehavior>
+            </Entry.Behaviors>
+        </Entry>
+
+
+
+        <Button x:Name="BtnLogin" Clicked="BtnLogin_Clicked" Text="Login" IsEnabled="{Binding Source={x:Reference loginForm}, Path=IsValid}"></Button>
+
+
+        <Label Text ="Forgotten User Name or Password?" TextColor="Blue"></Label>
+    </StackLayout>
+
+
+</ContentPage>
